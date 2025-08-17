@@ -136,6 +136,7 @@ function createPanZoom(domElement, options) {
     isPaused: isPaused,
 
     getTransform: getTransformModel,
+    setTransform: setTransform,
 
     getMinZoom: getMinZoom,
     setMinZoom: setMinZoom,
@@ -432,6 +433,15 @@ function createPanZoom(domElement, options) {
   function zoomAbs(clientX, clientY, zoomLevel) {
     var ratio = zoomLevel / transform.scale;
     zoomByRatio(clientX, clientY, ratio);
+  }
+
+  function setTransform(newTransform) {
+    transform.x = newTransform.x || 0;
+    transform.y = newTransform.y || 0;
+    transform.scale = newTransform.scale || 1;
+    triggerEvent('zoom');
+    triggerEvent('pan');
+    makeDirty();
   }
 
   function centerOn(ui) {

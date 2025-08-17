@@ -72,6 +72,7 @@ declare module "panzoom" {
       toScaleValue: number
     ) => void;
     getTransform: () => Transform;
+    setTransform: (transform: Transform) => void;
     showRectangle: (rect: ClientRect) => void;
     pause: () => void;
     resume: () => void;
