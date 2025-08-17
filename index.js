@@ -135,6 +135,7 @@ function createPanZoom(domElement, options) {
     isPaused: isPaused,
 
     getTransform: getTransformModel,
+    setTransform: setTransform,
 
     getMinZoom: getMinZoom,
     setMinZoom: setMinZoom,
@@ -272,6 +273,15 @@ function createPanZoom(domElement, options) {
 
   function setTransformOrigin(newTransformOrigin) {
     transformOrigin = parseTransformOrigin(newTransformOrigin);
+  }
+
+  function setTransform(newTransform) {
+    transform.x = newTransform.x || 0;
+    transform.y = newTransform.y || 0;
+    transform.scale = newTransform.scale || 1;
+    triggerEvent('zoom');
+    triggerEvent('pan');
+    makeDirty();
   }
 
   function getZoomSpeed() {
