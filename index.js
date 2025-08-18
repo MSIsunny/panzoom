@@ -805,7 +805,7 @@ function createPanZoom(domElement, options) {
     // for Firefox, left click == 0
     var isLeftButton =
       (e.button === 1 && window.event !== null) || e.button === 0;
-    if (!isLeftButton) return;
+    if (!isLeftButton && !options.rightButton) return;
 
     smoothScroll.cancel();
 
