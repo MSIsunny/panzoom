@@ -55,6 +55,7 @@ declare module "panzoom" {
   }
 
   export interface PanZoom {
+    setRightButtonMode: (enable: boolean) => void;
     dispose: () => void;
     moveBy: (dx: number, dy: number, smooth: boolean) => void;
     moveTo: (x: number, y: number) => void;

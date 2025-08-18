@@ -70,6 +70,7 @@ function createPanZoom(domElement, options) {
   var speed = typeof options.zoomSpeed === 'number' ? options.zoomSpeed : defaultZoomSpeed;
   var transformOrigin = parseTransformOrigin(options.transformOrigin);
   var textSelection = options.enableTextSelection ? fakeTextSelectorInterceptor : domTextSelectionInterceptor;
+  var rightButton = options.rightButton || false;
 
   validateBounds(bounds);
 
@@ -119,6 +120,8 @@ function createPanZoom(domElement, options) {
   listenForEvents();
 
   var api = {
+    setRightButtonMode: setRightButtonMode,
+
     dispose: dispose,
     moveBy: internalMoveBy,
     moveTo: moveTo,
@@ -161,6 +164,10 @@ function createPanZoom(domElement, options) {
   }
 
   return api;
+
+  function setRightButtonMode(enable) {
+    rightButton = enable;
+  }
 
   function pause() {
     releaseEvents();
@@ -802,7 +809,7 @@ function createPanZoom(domElement, options) {
     var isLeftButton =
       (e.button === 1 && window.event !== null) || e.button === 0;
     var isRightButton = e.button === 2;
-    if ((!isLeftButton && !options.rightButton) || (!isRightButton && options.rightButton)) return;
+    if ((!isLeftButton && !rightButton) || (!isRightButton && rightButton)) return;
 
     smoothScroll.cancel();
 
