@@ -496,11 +496,7 @@ function createPanZoom(domElement, options) {
   }
 
   function listenForEvents() {
-    if (options.rightButton) {
-      owner.addEventListener('contextmenu', onMouseDown, { passive: false });
-    } else {
-      owner.addEventListener('mousedown', onMouseDown, { passive: false });
-    }
+    owner.addEventListener('mousedown', onMouseDown, { passive: false });
     owner.addEventListener('dblclick', onDoubleClick, { passive: false });
     owner.addEventListener('touchstart', onTouch, { passive: false });
     owner.addEventListener('keydown', onKeyDown, { passive: false });
@@ -805,7 +801,8 @@ function createPanZoom(domElement, options) {
     // for Firefox, left click == 0
     var isLeftButton =
       (e.button === 1 && window.event !== null) || e.button === 0;
-    if (!isLeftButton && !options.rightButton) return;
+    var isRightButton = e.button === 2;
+    if ((!isLeftButton && !options.rightButton) || (!isRightButton && options.rightButton)) return;
 
     smoothScroll.cancel();
 
@@ -820,9 +817,6 @@ function createPanZoom(domElement, options) {
     document.addEventListener('mouseup', onMouseUp);
     textSelection.capture(e.target || e.srcElement);
 
-    if (options.rightButton) {
-      e.preventDefault()
-    }
     return false;
   }
 
