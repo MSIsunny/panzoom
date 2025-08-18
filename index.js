@@ -496,7 +496,11 @@ function createPanZoom(domElement, options) {
   }
 
   function listenForEvents() {
-    owner.addEventListener('mousedown', onMouseDown, { passive: false });
+    if (options.rightButton) {
+      owner.addEventListener('contextmenu', onMouseDown, { passive: false });
+    } else {
+      owner.addEventListener('mousedown', onMouseDown, { passive: false });
+    }
     owner.addEventListener('dblclick', onDoubleClick, { passive: false });
     owner.addEventListener('touchstart', onTouch, { passive: false });
     owner.addEventListener('keydown', onKeyDown, { passive: false });
@@ -816,6 +820,9 @@ function createPanZoom(domElement, options) {
     document.addEventListener('mouseup', onMouseUp);
     textSelection.capture(e.target || e.srcElement);
 
+    if (options.rightButton) {
+      e.preventDefault()
+    }
     return false;
   }
 
